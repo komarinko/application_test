@@ -1,0 +1,46 @@
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-4">
+
+
+
+
+
+
+
+<h2>New book</h2>
+<%= form_for(@book, url: books_path) do |f| %>
+	<p>Title</p>
+	<p><%= f.text_field :title, class: "book_title" %></p>
+	<p>opinion</p>
+	<p><%= f.text_area :opinion, class: "book_body" %></p>
+	<p><%= f.submit 'Create Book' %></p>
+<% end %>
+
+
+		</div>
+		<div class="col-lg-8">
+
+
+<h2>Users</h2>
+<table class="table table-hover table-inverse">
+	<tr>
+		<th>image</th>
+		<th>name</th>
+		<th></th>
+	</tr>
+<% @users.each do |user| %>
+	<tr>
+		<td><%= attachment_image_tag user, :profile_image,　format: 'jpeg', fallback: "no_image.jpg", size: "60x60" %></td>
+		<td><%= user.name %></td>
+		<td><%= link_to "Show", user_path(user.id), class: "user_#{user.id}" %></td>
+	</tr>
+<% end %>
+</table>
+
+
+
+		</div>
+	</div>
+</div>

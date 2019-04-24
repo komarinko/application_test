@@ -1,0 +1,17 @@
+
+<% if @user.errors.any? %>
+  <p>errorです。</p>
+  <% @user.errors.full_messages.each do |message| %>
+    <%= message %>
+  <% end %>
+<% end %>
+
+
+<h2>User info</h2>
+<%= form_for(@user) do |f| %>
+<%= f.text_field :name, autofocus: true, placeholder:"Name", class: "name" %>
+<p>Image</p>
+<p><%= f.attachment_field :profile_image, placeholder: "プロフィール画像", class: "user_image" %></p>
+<p><%= f.text_area :introduction, autofocus: true, placeholder:"Introduction", class: "introduction" %></p>
+<p><%= f.submit "Update User" %></p>
+<% end %>

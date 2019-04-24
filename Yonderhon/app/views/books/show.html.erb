@@ -1,0 +1,45 @@
+
+
+
+<p class="success_message"><%= flash[:success] %></p>
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-4">
+
+
+<h2>New book</h2>
+<%= form_for(@book, url: books_path, html: {method: "post"}) do |f| %>
+	<p>Title</p>
+	<p><%= f.text_field :title, class: "book_title" %></p>
+	<p>opinion</p>
+	<p><%= f.text_area :opinion, class: "book_body" %></p>
+	<p><%= f.submit 'Create Book' %></p>
+<% end %>
+
+
+		</div>
+		<div class="col-lg-8">
+
+
+
+<h2>Book detail</h2>
+<table class="table table-hover table-inverse">
+	<tr>
+		<td><%= attachment_image_tag @book.user, :profile_image,　format: 'jpeg', fallback: "no_image.jpg", size: "100x100" %></td>
+		<td><%= @book.title %></td>
+		<td><%= @book.opinion %></td>
+
+		<% if @book.user.id == current_user.id %>
+			<td><%= link_to "Edit", edit_book_path(@book.id), class: "edit_book_#{@book.id}" %></td>
+			<td><%= link_to "Destroy", book_path(@book.id), method: :delete, "data-confirm" => "Are you sure?", class: "destroy_book_#{@book.id}" %></td>
+		<% end %>
+	</tr>
+</table>
+
+
+
+		</div>
+	</div>
+</div>
