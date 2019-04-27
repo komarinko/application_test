@@ -1,12 +1,32 @@
 
-
-
 <p class="success_message"><%= flash[:success] %></p>
 
 
 <div class="container">
 	<div class="row">
 		<div class="col-lg-4">
+
+
+<h2>User info</h2>
+<p><%= attachment_image_tag @user_book.user, :profile_image,　format: 'jpeg', fallback: "no_image.jpg", size: "100x100" %></p>
+<table class="table">
+	<tr>
+		<td>name</td>
+		<td><%= @user_book.user.name %></td>
+	</tr>
+	<tr>
+		<td>introduction</td>
+		<td><%= @user_book.user.introduction %></td>
+	</tr>
+</table>
+<div class="row">
+<% if @user_book.user.id == current_user.id %>
+	<p><%= link_to "", edit_user_path(@user), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_#{@user.id}" %></p>
+<% else %>
+	<p><%= link_to "", user_path(current_user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench user_#{current_user.id}" %></p>
+<% end %>
+</div>
+
 
 
 <h2>New book</h2>
@@ -27,13 +47,17 @@
 <h2>Book detail</h2>
 <table class="table table-hover table-inverse">
 	<tr>
-		<td><%= attachment_image_tag @book.user, :profile_image,　format: 'jpeg', fallback: "no_image.jpg", size: "100x100" %></td>
-		<td><%= @book.title %></td>
-		<td><%= @book.opinion %></td>
+		<td><%= link_to user_path(@user_book.user.id), class: "user_#{@user_book.user.id}" do %><%= attachment_image_tag @user_book.user, :profile_image,　format: 'jpeg', fallback: "no_image.jpg", size: "100x100" %>
+			<% end %><br>
+			<%= link_to @user_book.user.name, user_path(@user_book.user.id), class: "user_#{@user_book.user.id}" %>
 
-		<% if @book.user.id == current_user.id %>
-			<td><%= link_to "Edit", edit_book_path(@book.id), class: "edit_book_#{@book.id}" %></td>
-			<td><%= link_to "Destroy", book_path(@book.id), method: :delete, "data-confirm" => "Are you sure?", class: "destroy_book_#{@book.id}" %></td>
+		</td>
+		<td><%= link_to @user_book.title, book_path(@user_book.id), class: "book_#{@user_book.id}" %></td>
+		<td><%= @user_book.opinion %></td>
+
+		<% if @user_book.user.id == current_user.id %>
+			<td><%= link_to "Edit", edit_book_path(@user_book.id), class: "btn-sm btn-success edit_book_#{@user_book.id}" %></td>
+			<td><%= link_to "Destroy", book_path(@user_book.id), method: :delete, "data-confirm" => "Are you sure?", class: "btn-sm btn-danger destroy_book_#{@user_book.id}" %></td>
 		<% end %>
 	</tr>
 </table>
